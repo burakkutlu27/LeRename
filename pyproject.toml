@@ -1,0 +1,72 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lerename"
+version = "1.0.0"
+description = "File Renamer & Price Calculator - Automatically rename images based on PDF filenames and extract price information"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "LeRename Developer", email = "developer@lerename.com"}
+]
+maintainers = [
+    {name = "LeRename Developer", email = "developer@lerename.com"}
+]
+keywords = [
+    "file-renamer",
+    "pdf-organizer", 
+    "invoice-manager",
+    "receipt-processor",
+    "bulk-rename",
+    "price-calculator",
+    "document-organizer",
+    "python-tool",
+    "file-management",
+    "automation",
+    "turkish",
+    "fatura",
+    "makbuz",
+    "dosya-adlandırma",
+    "fiyat-hesaplama"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Office/Business",
+    "Topic :: System :: Filesystems",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+]
+requires-python = ">=3.7"
+dependencies = [
+    "pyinstaller>=5.13.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/username/LeRename"
+Repository = "https://github.com/username/LeRename"
+Documentation = "https://github.com/username/LeRename#readme"
+"Bug Tracker" = "https://github.com/username/LeRename/issues"
+
+[project.scripts]
+lerename = "file_renamer:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]
+exclude = ["build*", "dist*", "*.egg-info*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.txt", "*.md", "*.bat", "*.spec"]

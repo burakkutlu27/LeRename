@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Dosya Yeniden Adlandırma ve Fiyat Toplama Programı
+LeRename - File Renamer & Price Calculator
 
-Bu program:
-1. Kullanıcıdan klasör yolu alır
-2. PDF ve resim dosyalarını bulur
-3. Oluşturulma tarihine göre sıralar
-4. PDF isimlerini referans alarak resimleri yeniden adlandırır
-5. PDF isimlerinden fiyatları çıkarır ve toplar
-6. Sonuçları fiyatlar.txt dosyasına yazar
+This program:
+1. Gets folder path from user
+2. Finds PDF and image files
+3. Sorts by modification date
+4. Renames images based on PDF reference names
+5. Extracts and sums prices from PDF names
+6. Writes results to fiyatlar.txt file
+
+Keywords: file-renamer, pdf-organizer, invoice-manager, bulk-rename, price-calculator
 """
 
 import os
@@ -271,13 +273,10 @@ def create_price_summary_file(folder_path: Path, pdf_prices: Dict[str, float]) -
         print(f"Hata: Fiyat dosyası oluşturulamadı: {e}")
 
 
-def main():
+def process_folder():
     """
-    Ana program fonksiyonu.
+    Tek bir klasörü işler.
     """
-    print("Dosya Yeniden Adlandırma ve Fiyat Toplama Programı")
-    print("=" * 50)
-    
     try:
         # 1. Klasör yolu al
         folder_path = get_folder_path()
@@ -288,7 +287,7 @@ def main():
         
         if not files:
             print("Klasörde PDF veya resim dosyası bulunamadı!")
-            return
+            return False
         
         print(f"Toplam {len(files)} dosya bulundu.")
         
@@ -320,15 +319,67 @@ def main():
         print("İşlem tamamlandı!")
         print("="*50)
         
-        # Kullanıcının sonucu görmesi için bekle
-        input("\nDevam etmek için Enter tuşuna basın...")
+        return True
         
     except KeyboardInterrupt:
-        print("\n\nProgram kullanıcı tarafından sonlandırıldı.")
-        input("\nÇıkmak için Enter tuşuna basın...")
+        print("\n\nİşlem kullanıcı tarafından iptal edildi.")
+        return False
     except Exception as e:
         print(f"\nBeklenmeyen bir hata oluştu: {e}")
-        input("\nÇıkmak için Enter tuşuna basın...")
+        return False
+
+
+def main():
+    """
+    Ana program fonksiyonu - sürekli çalışır.
+    """
+    print("📁 LeRename - Dosya Yeniden Adlandırma ve Fiyat Toplama Programı")
+    print("=" * 70)
+    print("Birden fazla klasör işleyebilirsiniz. Çıkmak için 'q' yazın.")
+    print("=" * 70)
+    
+    while True:
+        try:
+            print("\n" + "─" * 50)
+            print("Klasör seçimi için hazır...")
+            print("─" * 50)
+            
+            # Klasör işle
+            success = process_folder()
+            
+            if success:
+                print("\n✅ İşlem başarıyla tamamlandı!")
+            else:
+                print("\n❌ İşlem tamamlanamadı.")
+            
+            # Kullanıcıya seçenek sun
+            print("\n" + "─" * 50)
+            choice = input("Başka bir klasör işlemek ister misiniz? (E/h/q): ").strip().lower()
+            
+            if choice in ['q', 'quit', 'exit', 'çık', 'çıkış']:
+                print("\n👋 Program sonlandırılıyor...")
+                break
+            elif choice in ['h', 'hayır', 'no', 'n']:
+                print("\n👋 Program sonlandırılıyor...")
+                break
+            elif choice in ['e', 'evet', 'yes', 'y', '']:
+                print("\n🔄 Yeni işlem başlatılıyor...")
+                continue
+            else:
+                print("❓ Geçersiz seçim. Program devam ediyor...")
+                continue
+                
+        except KeyboardInterrupt:
+            print("\n\n👋 Program kullanıcı tarafından sonlandırıldı.")
+            break
+        except Exception as e:
+            print(f"\n💥 Beklenmeyen bir hata oluştu: {e}")
+            choice = input("Program devam etsin mi? (E/h): ").strip().lower()
+            if choice in ['h', 'hayır', 'no', 'n']:
+                break
+    
+    print("\n🎉 Teşekkürler! Program kapatılıyor...")
+    input("Çıkmak için Enter tuşuna basın...")
 
 
 if __name__ == "__main__":
